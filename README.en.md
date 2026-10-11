@@ -19,14 +19,29 @@ DSH Wallpaper allows local static pictures (PNG/JPEG/WebP) and looping muted vid
 
 **Opacity wording matters:** 0% opacity means completely transparent; 100% opacity means completely opaque. Wallpaper opacity controls the media layer, whereas panel background opacity controls the translucent UI surface behind text. Neither is a text-opacity control.
 
-## Install from source (Desktop)
+## Installation and updates
 
-1. Download or clone **all** repository files to a stable local folder. The folder must contain `package.json`, `client.js`, `index.js`, and `cordis.patch.yml` directly.
-2. In DSH Desktop, open Creator Mode. Ask its `plugin_manager` tool to run `install_bundle` with `target` equal to that folder's **absolute local path**. Alternatively use the official Plugins page's Add plugin flow with an absolute local path when supported by your DSH build.
-3. Inspect the installation outcome; an installation recorded as `restart-required` still requires a restart. Quit the entire DSH Desktop process from the system tray and restart it.
-4. In **Settings > Wallpaper background**, confirm version `0.3.0-rc.7`. Start with the built-in gradient test pattern before choosing personal media.
+> **Private preview candidate only.** The Git tag `v0.3.0-rc.7` and public GitHub Release **do not exist yet**. The Git command below is the intended *post-tag* install spec, not a currently available public download. Until then, use an owner-provided local test package or source checkout.
 
-**Not an npm registry package:** the internal package name currently is `@local/dsh-video-wallpaper`, and `package.json` intentionally has `private: true`. Public visibility on GitHub does not automatically publish it to npm. Do not assume `npm install @local/dsh-video-wallpaper` works.
+**A. Install a pinned Git version (after the tag is created):** In DSH **Plugins → Add plugin**, enter:
+
+```text
+github:deepseaandhighsky-arch/DSH-Wallpaper#v0.3.0-rc.7
+```
+
+For stronger supply-chain pinning, use `#<full-commit-sha>` instead of a mutable tag. This Git source is accessible only to clients authorized for the repository while it remains Private.
+
+**B. Install a prebuilt `.tgz` (recommended for non-developers):** After a pre-release is approved, download `local-dsh-video-wallpaper-0.3.0-rc.7.tgz` from its GitHub Release assets. In **Plugins → Add plugin**, select the local archive or provide its absolute path. The equivalent CLI command, from the download directory, is:
+
+```sh
+dsh plugin --profile desktop add ./local-dsh-video-wallpaper-0.3.0-rc.7.tgz
+```
+
+Do **not** extract the `.tgz` before installing it. GitHub Actions also provides a short-lived, maintainer-only `wallpaper-candidate-tgz` testing artifact; that is **not** a public Release.
+
+**C. Install from source for development/troubleshooting:** Clone/download the whole repository with `package.json`, `client.js`, `index.js`, and `cordis.patch.yml` at its root. In DSH Desktop Creator Mode, use `plugin_manager install_bundle` with `target` set to the **absolute source directory**. Fully quit the DSH Desktop process from the system tray and relaunch. Check **Settings → Wallpaper background** for version `0.3.0-rc.7` and test the gradient pattern before importing media.
+
+**Not available from npm:** the internal package is `@local/dsh-video-wallpaper` and `package.json` deliberately retains `private: true`. GitHub visibility does not publish a package to the npm registry. See the [full installation and verification guide](docs/INSTALLATION.md).
 
 ## Compatibility / limitations
 
@@ -48,6 +63,7 @@ Requires Node.js >= 22 for source checks:
 npm run check
 npm run audit:repo
 npm pack --dry-run
+npm run pack:tgz # creates and validates a local .tgz + SHA-256; no registry publish
 ```
 
 An optional `npm run visual:smoke` uses a standalone mock DOM, not an installed DSH Desktop. It may time out in restricted Chromium environments.

@@ -14,6 +14,7 @@ From the source root on Node.js 22+ and Python 3:
 npm run check
 npm run audit:repo -- --public
 npm pack --dry-run
+npm run pack:tgz # validates exact allowlisted files and writes .tgz.sha256
 python3 scripts/build-release.py --require-license
 ```
 
@@ -28,11 +29,13 @@ python3 scripts/build-release.py --require-license
 
 ## Release process
 
-1. Create new repo as **Private**, push only the clean initial commit. Review commit author and actions result.
+1. Keep the existing clean repository **Private** until explicit approval; verify the root commit uses GitHub noreply and that CI passes on the current head.
 2. Test upgrade/rollback on a real DSH Desktop and record version, video play, wallpaper blur/opacity/preset behavior, sidebar toggle geometry and light/dark interaction.
 3. Securely inspect tracked files, output ZIP and any prospective screenshots. Confirm source/icon rights under MIT.
 4. After **explicit** maintainer approval, change only the new repository visibility to Public.
-5. Make a GitHub pre-release using tag `v0.3.0-rc.7`, with checked artifacts and clear experimental status. No npm publication.
+5. After a reviewed release commit and real Desktop acceptance, create tag `v0.3.0-rc.7` **on the exact approved commit**. The CI tag gate checks `refs/tags/v<package.json.version>` and produces a `.tgz` plus SHA-256 alongside the local ZIP. This does **not** publish a GitHub Release.
+6. Only after separate approval, make a GitHub **pre-release**, attach the validated `.tgz` and optional ZIP with test notes; do not publish to npm.
+7. Review `docs/INSTALLATION.md` and README status warnings when the repository is actually Public. GitHub Actions artifacts expire after seven days and are not a substitute for Release assets.
 
 ## Rollback
 

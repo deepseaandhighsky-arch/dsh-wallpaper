@@ -15,7 +15,7 @@ const required = [
   'client.js', 'index.js', 'cordis.patch.yml', 'package.json',
   'README.md', 'README.en.md', 'CHANGELOG.md', 'LICENSE', 'THIRD_PARTY_NOTICES.md',
   'icon.svg', 'locale/en.json', 'locale/zh.json',
-  'test/plugin.test.mjs', 'scripts/browser-smoke.mjs',
+  'test/plugin.test.mjs', 'scripts/browser-smoke.mjs', 'scripts/pack-tgz.mjs',
   '.github/workflows/check.yml', 'SECURITY.md', 'CONTRIBUTING.md',
   'docs/INSTALLATION.md', 'docs/COMPATIBILITY.md',
   'docs/PRIVACY.md', 'docs/RELEASE_CHECKLIST.md'
@@ -35,6 +35,7 @@ check(packageJson.repository?.url?.includes('github.com/deepseaandhighsky-arch/d
 check(packageJson.private === true, 'Package is not intentionally blocked from accidental npm publication');
 check(packageJson.dsh?.bundle?.patch === './cordis.patch.yml', 'DSH bundle patch is not declared correctly');
 check(packageJson.exports?.['./client'] === './client.js', 'DSH client export is not declared correctly');
+check(packageJson.scripts?.['pack:tgz'] === 'node scripts/pack-tgz.mjs', 'Missing verified DSH-compatible tgz build command');
 
 const ignoredRoots = new Set(['.git', 'node_modules', 'dist', 'build', 'coverage']);
 const forbiddenNames = /^(?:\.env(?:\..*)?|\.npmrc|id_rsa(?:\.pub)?|credentials(?:\..*)?|.*\.p(?:em|12|fx)|.*\.key)$/i;
