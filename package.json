@@ -22,7 +22,8 @@
     "check": "node --check index.js && node --check client.js && npm test",
     "visual:smoke": "node scripts/browser-smoke.mjs",
     "audit:repo": "node scripts/repo-audit.mjs",
-    "pack:zip": "python3 scripts/build-release.py"
+    "pack:zip": "python3 scripts/build-release.py",
+    "pack:tgz": "node scripts/pack-tgz.mjs"
   },
   "dsh": {
     "bundle": {

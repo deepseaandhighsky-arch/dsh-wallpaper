@@ -71,12 +71,27 @@
 
 ## 📥 安装与更新
 
-1. 下载源码目录（不是只下载 `client.js`），确保根目录包含 `package.json`、`index.js`、`client.js`、`cordis.patch.yml`。
-2. 打开 **DSH Desktop → Creator Mode**，使用插件管理工具 `plugin_manager` 的 `install_bundle` 操作，`target` 指向上述目录**绝对路径**。
-3. 确认安装或替换结果不是 `failed`、`restart-required` 等待处理状态；**从系统托盘彻底退出 DSH 再重启**，以加载新的 Client JS。
-4. 进入 **设置 → 壁纸背景**，确认显示版本 `0.3.0-rc.7`。建议先开启测试图案验证四个滑块，之后再选择个人图片或视频。
+> **当前仍为私有预发布候选版。** 以下 Git tag 安装地址将在维护者创建 `v0.3.0-rc.7` 标签、仓库允许目标用户访问后可用；目前**尚未创建 tag，也没有公开 GitHub Release**。优先使用私有测试用的本地 `.tgz` 或源码目录验收。
 
-详见 [English quick start](README.en.md) / [安装说明](docs/INSTALLATION.md) 和 [排障指南](docs/TROUBLESHOOTING.md)。不要清空整个 DSH Profile 作为更新手段；媒体文件存放在该 Profile 的浏览器存储内。
+**方式 A：从 GitHub 固定版本安装（推荐用于发布后）**
+
+在 DSH **插件 → 添加插件** 中输入以下 Git 源（也可通过 CLI 安装到对应的 profile）：
+
+```text
+github:deepseaandhighsky-arch/DSH-Wallpaper#v0.3.0-rc.7
+```
+
+官方建议对来源敏感的 Git 安装固定**提交 SHA**；固定 tag 方便阅读与升级，但 tag 本身理论上可以被重写。仓库还是 Private 时，安装端必须拥有相应的 Git 访问权限。
+
+**方式 B：通过 `.tgz` 文件安装（无需 Git 访问，适合普通用户）**
+
+从未来的 GitHub Pre-release 下载 `local-dsh-video-wallpaper-0.3.0-rc.7.tgz`，在 **插件 → 添加插件** 中选择本地压缩包或输入其绝对路径；也可在 CLI 中使用 `dsh plugin --profile desktop add ./local-dsh-video-wallpaper-0.3.0-rc.7.tgz`（在安装包所在目录执行）。**不要解压 `.tgz` 再安装**。发布前，维护者可从 GitHub Actions 的 `wallpaper-candidate-tgz` 测试工件获取它；该工件不是正式 Release，且仅短期保留。
+
+**方式 C：源码目录（开发与排障）**
+
+下载完整仓库（必须有 `package.json`、`index.js`、`client.js`、`cordis.patch.yml`），通过 DSH Creator Mode 的 `plugin_manager install_bundle`，将 `target` 指向仓库目录绝对路径。安装后从系统托盘**彻底退出 DSH Desktop 并重启**，前往 **设置 → 壁纸背景**确认版本 `0.3.0-rc.7`；先使用测试图案，再导入个人媒体。
+
+详见 [安装说明](docs/INSTALLATION.md) / [English quick start](README.en.md) / [故障排查](docs/TROUBLESHOOTING.md)。现阶段包名 `@local/dsh-video-wallpaper` **未发布到 npm**，勿把它当作 npm 注册表包名安装。不要清空 DSH Profile：媒体位于该 Profile 的浏览器存储内。
 
 ## 🧪 开发与验证
 
@@ -84,6 +99,7 @@ Requirements: Node.js 22+（使用原生测试运行器，无需额外 npm 依�
 
 ```bash
 npm run check           # 语法检查、数据与源码回归测试
+npm run pack:tgz        # 生成并校验官方兼容的 .tgz + SHA-256（不会发布到 npm）
 npm run visual:smoke    # 可选：需要独立可运行的 Chromium（可通过 CHROME_BIN 指定）
 ```
 
