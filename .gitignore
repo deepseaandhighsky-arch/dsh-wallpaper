@@ -1,0 +1,43 @@
+# Dependencies and build artifacts
+node_modules/
+dist/
+build/
+coverage/
+*.log
+.DS_Store
+Thumbs.db
+
+# Local developer data
+.local/
+.vscode/
+.idea/
+.env
+.env.*
+!.env.example
+.npmrc
+*.pem
+*.key
+*.p12
+*.pfx
+
+# Personal wallpaper media and recordings; only vetted, rights-cleared
+# examples should ever be published separately under docs/assets/.
+local-media/
+wallpapers/
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.webp
+*.apng
+*.mp4
+*.mov
+*.m4v
+*.webm
+*.ogg
+*.mkv
+*.avi
+
+# Do not accidentally commit user profile data
+.dsh/
+profiles/

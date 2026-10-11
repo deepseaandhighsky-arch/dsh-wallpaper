@@ -1,0 +1,35 @@
+name: Source and packaging checks
+
+on:
+  push:
+    branches: [main, 'feature/**', 'release/**', 'prep/**']
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Syntax and regression tests
+        run: npm run check
+      - name: Repository hygiene and version alignment
+        run: npm run audit:repo -- --public
+      - name: Verify npm package files (without publishing)
+        run: npm pack --dry-run
+      - name: Build local-install ZIP
+        run: python3 scripts/build-release.py --require-license
+      - name: Upload candidate ZIP for maintainer testing
+        uses: actions/upload-artifact@v4
+        with:
+          name: wallpaper-candidate-zip
+          path: dist/*.zip
+          if-no-files-found: error
+          retention-days: 7

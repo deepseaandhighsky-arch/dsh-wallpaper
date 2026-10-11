@@ -1,0 +1,49 @@
+{
+  "name": "@local/dsh-video-wallpaper",
+  "version": "0.3.0-rc.7",
+  "private": true,
+  "type": "module",
+  "description": "Local image and looping-video wallpapers for the DeepSeek Harness Desktop and Web UI",
+  "exports": {
+    ".": "./index.js",
+    "./client": "./client.js",
+    "./locale/*.json": "./locale/*.json",
+    "./icon": "./icon.svg"
+  },
+  "files": [
+    "index.js",
+    "client.js",
+    "cordis.patch.yml",
+    "locale/*.json",
+    "icon.svg"
+  ],
+  "scripts": {
+    "test": "node --test test/*.test.mjs",
+    "check": "node --check index.js && node --check client.js && npm test",
+    "visual:smoke": "node scripts/browser-smoke.mjs",
+    "audit:repo": "node scripts/repo-audit.mjs",
+    "pack:zip": "python3 scripts/build-release.py"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "platform": "web",
+      "immediately": true,
+      "inject": [
+        "@deepseek-ai/dsh-client-ui-layout",
+        "@deepseek-ai/dsh-client-ui-settings-general"
+      ]
+    }
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/deepseaandhighsky-arch/dsh-wallpaper.git"
+  },
+  "bugs": {
+    "url": "https://github.com/deepseaandhighsky-arch/dsh-wallpaper/issues"
+  },
+  "homepage": "https://github.com/deepseaandhighsky-arch/dsh-wallpaper#readme"
+}
